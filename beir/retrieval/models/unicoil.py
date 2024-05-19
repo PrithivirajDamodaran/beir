@@ -1,5 +1,5 @@
 from typing import Optional, List, Dict, Union, Tuple
-from transformers import BertConfig, BertModel, BertTokenizer, PreTrainedModel
+from transformers import BertConfig, BertModel, AutoTokenizer, PreTrainedModel
 import numpy as np
 import torch
 from tqdm.autonotebook import trange
@@ -10,8 +10,9 @@ class UniCOIL:
                 doc_max_length: int = 500, **kwargs):
         self.sep = sep
         self.model = UniCoilEncoder.from_pretrained(model_path)
-        self.tokenizer = BertTokenizer.from_pretrained(model_path)
-        self.bert_input_emb = len(self.tokenizer.get_vocab())
+        self.tokenizer = AutoTokenizer.from_pretrained(model_path)
+        # self.bert_input_emb = len(self.tokenizer.get_vocab())
+        self.bert_input_emb = 250037
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
         self.query_max_length = query_max_length
         self.doc_max_length = doc_max_length 
